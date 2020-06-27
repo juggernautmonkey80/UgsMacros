@@ -15,6 +15,7 @@ namespace UgsMacros
         public IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
+            kernel.Bind<IMacroVariableSet>().To<MacroVariableSet>().InSingletonScope();
             kernel.Bind<ICommandSender>().To<CommandSender>();
             kernel.Bind<ICommandLineReader>().To<CommandLineReader>();
             kernel.Bind<IMacro>().To<HelpMacro>();
@@ -22,7 +23,6 @@ namespace UgsMacros
             kernel.Bind<IHelpfulMacro>().To<ExitMacro>();
             kernel.Bind<IMacro>().To<SendMacro>();
             kernel.Bind<IHelpfulMacro>().To<SendMacro>();
-            
 
             var pluginAssemblyNames = ConfigurationManager.AppSettings["Register"]
                 .Split(',')

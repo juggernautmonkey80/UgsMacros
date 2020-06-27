@@ -30,7 +30,7 @@ namespace UgsMacros.Framework.Regex
 
         public decimal GetMillimeters(Match match)
         {
-            return GetValue(match) * 25.4m;
+            return decimal.Round(GetValue(match) * 25.4m, 3);
         }
     }
 }

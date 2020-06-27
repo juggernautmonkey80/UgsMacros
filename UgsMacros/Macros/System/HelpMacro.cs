@@ -26,7 +26,8 @@ namespace UgsMacros.Macros.System
                 .Where(a => !string.IsNullOrWhiteSpace(a.Key))
                 .ToDictionary(
                     a => a.Key,
-                    a => a.Macro);
+                    a => a.Macro,
+                    StringComparer.InvariantCultureIgnoreCase);
         }
 
         public string MatchString => @"^help(?<detail>\s+\S+)*";
@@ -58,7 +59,7 @@ namespace UgsMacros.Macros.System
         private void ListBasicHelp()
         {
             Console.WriteLine("help MACRO_NAME - Gets more details about the macro usage");
-            foreach (var helpfulMacro in _helpfulMacros)
+            foreach (var helpfulMacro in _helpfulMacros.OrderBy(t => t.Key))
             {
                 Console.Write($"{helpfulMacro.Key} - ");
                 helpfulMacro.Value.Help(HelpSummaryType.Basic);
