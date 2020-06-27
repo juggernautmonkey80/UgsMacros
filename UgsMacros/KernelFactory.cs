@@ -17,9 +17,12 @@ namespace UgsMacros
             var kernel = new StandardKernel();
             kernel.Bind<ICommandSender>().To<CommandSender>();
             kernel.Bind<ICommandLineReader>().To<CommandLineReader>();
+            kernel.Bind<IMacro>().To<HelpMacro>();
             kernel.Bind<IMacro>().To<ExitMacro>();
-            kernel.Bind<IMacro>().To<QuitMacro>();
+            kernel.Bind<IHelpfulMacro>().To<ExitMacro>();
             kernel.Bind<IMacro>().To<SendMacro>();
+            kernel.Bind<IHelpfulMacro>().To<SendMacro>();
+            
 
             var pluginAssemblyNames = ConfigurationManager.AppSettings["Register"]
                 .Split(',')
@@ -42,6 +45,11 @@ namespace UgsMacros
                     Console.WriteLine($"Registering Macro '{macroAttribute.Name}' ({macroType})");
 
                     kernel.Bind<IMacro>().To(macroType);
+
+                    if (typeof(IHelpfulMacro).IsAssignableFrom(macroType))
+                    {
+                        kernel.Bind<IHelpfulMacro>().To(macroType);
+                    }
                 }
             }
 
