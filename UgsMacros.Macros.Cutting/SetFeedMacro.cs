@@ -5,36 +5,36 @@ using UgsMacros.Framework.Regex;
 
 namespace UgsMacros.Macros.Cutting
 {
-    [Macro("set-bit")]
-    public class SetBitMacro : IHelpfulMacro
+    [Macro("set-feed")]
+    public class SetFeedMacro : IHelpfulMacro
     {
-        private RegexDecimal _width;
+        private RegexDecimal _feed;
         private readonly IMacroVariableSet _variables;
 
-        public SetBitMacro(
+        public SetFeedMacro(
             IMacroVariableSet variables)
         {
             _variables = variables;
-            _width = new RegexDecimal("width");
+            _feed = new RegexDecimal("feed");
         }
 
-        public string MatchString => $@"^set-bit\s+{_width.Expression}$";
+        public string MatchString => $@"^set-feed\s+{_feed.Expression}$";
 
         public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
         {
-            var width = _width.GetMillimeters(match);
-            _variables.BitWidth(width);
+            var feed = Convert.ToInt32(_feed.GetValue(match));
+            _variables.FeedRate(feed);
+            commandSender.SendLabeledCommand("Feed", $"F{feed}", init: false);
             return true;
         }
 
         public void Help(HelpSummaryType helpSummaryType)
         {
-            Console.WriteLine("Sets the standard bit width variable for macros that need to know the bit width");
+            Console.WriteLine("Sets the standard feed rate");
             if (helpSummaryType == HelpSummaryType.Detailed)
             {
                 Console.WriteLine("Examples:");
-                Console.WriteLine(" set-bit 0.25 - sets the bit width to 1/4 inch.");
-                Console.WriteLine(" set-bit 0&1/4 - sets teh bit width to 1/4 inch.");
+                Console.WriteLine(" set-feed 300 - Sets the feed to 300mpm");
             }
         }
     }

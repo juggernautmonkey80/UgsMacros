@@ -2,6 +2,6 @@
 {
     public interface ICommandSender
     {
-        void SendCommand(string command);
+        void SendCommand(string command, bool init = true);
     }
 }

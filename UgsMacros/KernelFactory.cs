@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UgsMacros.Framework;
+using UgsMacros.Inits;
 using UgsMacros.Macros.System;
 
 namespace UgsMacros
@@ -16,6 +17,7 @@ namespace UgsMacros
         {
             var kernel = new StandardKernel();
             kernel.Bind<IMacroVariableSet>().To<MacroVariableSet>().InSingletonScope();
+            kernel.Bind<IInitCommand>().To<StandardInitCommand>();
             kernel.Bind<ICommandSender>().To<CommandSender>();
             kernel.Bind<ICommandLineReader>().To<CommandLineReader>();
             kernel.Bind<IMacro>().To<HelpMacro>();

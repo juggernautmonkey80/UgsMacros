@@ -14,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\UgsMacros.Framework\UgsMacros.Framework.csproj" />
     <ProjectReference Include="..\UgsMacros.Macros.Cutting\UgsMacros.Macros.Cutting.csproj" />
-    <ProjectReference Include="..\UgsMacros.Macros.Jogging\UgsMacros.Macros.Jogging.csproj" />
     <ProjectReference Include="..\UgsMacros.Macros.Mortise\UgsMacros.Macros.Mortise.csproj" />
   </ItemGroup>
 

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UgsMacros", "UgsMacros\UgsM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UgsMacros.Framework", "UgsMacros.Framework\UgsMacros.Framework.csproj", "{7AA2743B-BC98-4B04-873F-7565BEA89DC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UgsMacros.Macros.Jogging", "UgsMacros.Macros.Jogging\UgsMacros.Macros.Jogging.csproj", "{4BBA3DC7-F0F6-4DC9-95CB-5B53E0FBFFB5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UgsMacros.Macros.Cutting", "UgsMacros.Macros.Cutting\UgsMacros.Macros.Cutting.csproj", "{4767B274-09E5-4554-8E12-484EE9850222}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UgsMacros.Macros.Mortise", "UgsMacros.Macros.Mortise\UgsMacros.Macros.Mortise.csproj", "{F7044734-44B7-43D5-95D3-A5B099C7563A}"
@@ -27,10 +25,6 @@ Global
 		{7AA2743B-BC98-4B04-873F-7565BEA89DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA2743B-BC98-4B04-873F-7565BEA89DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA2743B-BC98-4B04-873F-7565BEA89DC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4BBA3DC7-F0F6-4DC9-95CB-5B53E0FBFFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BBA3DC7-F0F6-4DC9-95CB-5B53E0FBFFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BBA3DC7-F0F6-4DC9-95CB-5B53E0FBFFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BBA3DC7-F0F6-4DC9-95CB-5B53E0FBFFB5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4767B274-09E5-4554-8E12-484EE9850222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4767B274-09E5-4554-8E12-484EE9850222}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4767B274-09E5-4554-8E12-484EE9850222}.Release|Any CPU.ActiveCfg = Release|Any CPU

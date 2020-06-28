@@ -27,8 +27,6 @@ namespace UgsMacros
 
         public void Run()
         {
-            _commandSender.SendCommand("G21 G91 G01 F300");
-
             while (true)
             {
                 Console.WriteLine();

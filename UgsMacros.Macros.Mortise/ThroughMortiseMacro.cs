@@ -5,37 +5,37 @@ using UgsMacros.Framework.Regex;
 
 namespace UgsMacros.Macros.Mortise
 {
-    [Macro("hinge-mortise")]
-    public class HingeMortiseMacro : IHelpfulMacro
+    [Macro("through-mortise")]
+    public class ThroughMortiseMacro : IHelpfulMacro
     {
         private IMacroVariableSet _variables;
 
-        private RegexDecimal _width;
-        private RegexDecimal _height;
-        private RegexDecimal _depth;
+        //private RegexDecimal _width;
+        //private RegexDecimal _height;
+        //private RegexDecimal _depth;
 
-        public HingeMortiseMacro(
+        public ThroughMortiseMacro(
             IMacroVariableSet variables)
         {
             _variables = variables;
 
-            _width = new RegexDecimal("width");
-            _height = new RegexDecimal("height");
-            _depth = new RegexDecimal("depth");
+            //_width = new RegexDecimal("width");
+            //_height = new RegexDecimal("height");
+            //_depth = new RegexDecimal("depth");
         }
 
-        public string MatchString => $@"^hinge-mortise\s+{_width.Expression}x{_height.Expression}\s+{_depth.Expression}";
+        public string MatchString => $@"^through-mortise";
 
         public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
         {
             var bitWidth = _variables.BitWidth();
             if (bitWidth.HasValue)
             {
-                var width = _width.GetMillimeters(match);
-                var height = _height.GetMillimeters(match);
-                var depth = _depth.GetMillimeters(match);
+                //var width = _width.GetMillimeters(match);
+                //var height = _height.GetMillimeters(match);
+                //var depth = _depth.GetMillimeters(match);
 
-                CutMortise(commandSender, width, height, depth, bitWidth.Value);
+                //CutMortise(commandSender, width, height, depth, bitWidth.Value);
             }
             else
             {
@@ -47,10 +47,10 @@ namespace UgsMacros.Macros.Mortise
 
         public void Help(HelpSummaryType helpSummaryType)
         {
-            Console.WriteLine("From a center line on the side, cuts a mortis with a width (Y-axis) and a height (X-axis) to the given depth");
+            Console.WriteLine("From a center point, cuts a mortis a little over half way through the stock");
             if (helpSummaryType == HelpSummaryType.Detailed)
             {
-                Console.WriteLine(" Corners still need to be cleaned up with a chisel");
+                Console.WriteLine(" The exact same through-mortise opperation can then be run on the other side");
                 Console.WriteLine();
                 Console.WriteLine("Syntax:");
                 Console.WriteLine(" hinge-mortise (WIDTH)x(HEIGHT) (DEPTH)");

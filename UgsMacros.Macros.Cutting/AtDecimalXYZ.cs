@@ -8,7 +8,7 @@ using UgsMacros.Framework.Regex;
 
 namespace UgsMacros.Macros.Cutting
 {
-    [Macro("@X,Y,Z")]
+    [Macro("@-with-z")]
     public class AtDecimalXYZ : IMacro
     {
         private RegexDecimal _x;
@@ -30,7 +30,7 @@ namespace UgsMacros.Macros.Cutting
             var y = _y.GetMillimeters(match);
             var z = _z.GetMillimeters(match);
 
-            restClient.SendCommand($"X{x} Y{y} Z{z}");
+            restClient.SendLabeledCommand("Cut", $"X{x} Y{y} Z{z}");
 
             return true;
         }
