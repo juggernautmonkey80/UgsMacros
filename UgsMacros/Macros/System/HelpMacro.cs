@@ -30,9 +30,9 @@ namespace UgsMacros.Macros.System
                     StringComparer.InvariantCultureIgnoreCase);
         }
 
-        public string MatchString => @"^help(?<detail>\s+\S+)*";
+        public string MatchString => @"^(help|\?)(?<detail>\s+\S+)*";
 
-        public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
             var targetMacroName = Convert.ToString(match.Groups["detail"].Value).Trim();
             if (targetMacroName.Length > 0)

@@ -9,7 +9,7 @@ namespace UgsMacros.Macros.System
     {
         public string MatchString => "^(exit|quit)$";
 
-        public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
             return false;
         }

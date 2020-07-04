@@ -9,6 +9,17 @@ namespace UgsMacros.Framework
             return variables.Value<decimal>("standard-bit-width", width);
         }
 
+        public static decimal GetBitWidth(this IMacroVariableSet variables)
+        {
+            var result = variables.BitWidth();
+            if (!result.HasValue)
+            {
+                throw new MacroFailedException("Bit Width Not Set.");
+            }
+
+            return result.Value;
+        }
+
         public static int FeedRate(this IMacroVariableSet variables, int? feed = null)
         {
             var result = variables.Value<int>("cut-feed-rate", feed);

@@ -8,6 +8,6 @@ namespace UgsMacros.Framework
     {
         string MatchString { get; }
 
-        bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator);
+        bool Execute(ICommandSender commandSender, Match match);
     }
 }

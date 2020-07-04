@@ -1,5 +1,4 @@
-﻿using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,31 +7,39 @@ using UgsMacros.Framework.Regex;
 
 namespace UgsMacros.Macros.Cutting
 {
-    [Macro("@@-with-z")]
-    public class JogAtDecimalXYZ : IMacro
+    [Macro("@@")]
+    public class JogAtDecimalXYZ : IHelpfulMacro
     {
-        private RegexDecimal _x;
-        private RegexDecimal _y;
-        private RegexDecimal _z;
+        private AtDecimalXYZ _cutter;
 
-        public JogAtDecimalXYZ()
+        public JogAtDecimalXYZ(
+            AtDecimalXYZ cutter)
         {
-            _x = new RegexDecimal("x");
-            _y = new RegexDecimal("y");
-            _z = new RegexDecimal("z");
+            _cutter = cutter;
         }
 
-        public string MatchString => $"^@@{_x.Expression},{_y.Expression},{_z.Expression}$";
+        public string MatchString => _cutter.MatchString.Replace("@", "@@");
 
-        public bool Execute(ICommandSender restClient, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
-            var x = _x.GetMillimeters(match);
-            var y = _y.GetMillimeters(match);
-            var z = _z.GetMillimeters(match);
+            var gcode = _cutter.BuildGCode(match);
 
-            restClient.SendLabeledCommand("Jog", $"G21 G91 G00 X{x} Y{y} X{z}", init: false);
+            commandSender.SendLabeledCommand("Jog", $"G21 G91 G00 {gcode}", init: false);
 
             return true;
+        }
+
+        public void Help(HelpSummaryType helpSummaryType)
+        {
+            Console.WriteLine("Jogs the bit with line interpolation by a relative X & Y (with optional Z)");
+            if (helpSummaryType == HelpSummaryType.Detailed)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Examples:");
+                Console.WriteLine(" @@2.5,0 - Quickly moves the bit 2.5 inches in the postitive x.");
+                Console.WriteLine(" @@2&1/2,0 - Quickly moves the bit 2.5 inches in the postitive x.");
+                Console.WriteLine(" @@0,0,-0.24 - Quickly plunges down 1/4 inch.");
+            }
         }
     }
 }

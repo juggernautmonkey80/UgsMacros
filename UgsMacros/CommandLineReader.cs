@@ -32,16 +32,27 @@ namespace UgsMacros
                 Console.WriteLine();
                 Console.Write(@"UGS:\>");
                 var cmd = Console.ReadLine();
-                var shouldContine = ProcessCommand(cmd);
-
-                if (!shouldContine.HasValue)
+                try
                 {
-                    Console.WriteLine("Unknown macro");
+                    var shouldContine = ProcessCommand(cmd);
+
+                    if (!shouldContine.HasValue)
+                    {
+                        Console.WriteLine("Unknown macro");
+                    }
+
+                    if (!shouldContine.GetValueOrDefault(true))
+                    {
+                        return;
+                    }
                 }
-
-                if (!shouldContine.GetValueOrDefault(true))
+                catch(MacroFailedException mfex)
                 {
-                    return;
+                    Console.WriteLine($"!! {mfex.Message}.");
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
                 }
             }
         }
@@ -54,12 +65,7 @@ namespace UgsMacros
                 var match = Regex.Match(cmd, macro.MatchString, RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
-                    shouldContine = macro.Execute(_commandSender, match, 
-                        subCmd =>
-                        {
-                            Console.WriteLine(subCmd);
-                            return ProcessCommand(subCmd);
-                        });
+                    shouldContine = macro.Execute(_commandSender, match);
                     break;
                 }
             }

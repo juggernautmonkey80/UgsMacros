@@ -9,7 +9,7 @@ namespace UgsMacros.Macros.System
     {
         public string MatchString => ">(?<gcode>.+)";
 
-        public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
             commandSender.SendCommand(match.Groups["gcode"].Value, init: false);
             return true;

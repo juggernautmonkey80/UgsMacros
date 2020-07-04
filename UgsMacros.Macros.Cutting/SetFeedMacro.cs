@@ -20,7 +20,7 @@ namespace UgsMacros.Macros.Cutting
 
         public string MatchString => $@"^set-feed\s+{_feed.Expression}$";
 
-        public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
             var feed = Convert.ToInt32(_feed.GetValue(match));
             _variables.FeedRate(feed);

@@ -5,7 +5,7 @@ using UgsMacros.Framework.Regex;
 
 namespace UgsMacros.Macros.Mortise
 {
-    [Macro("through-mortise")]
+    //[Macro("through-mortise")]
     public class ThroughMortiseMacro : IHelpfulMacro
     {
         private IMacroVariableSet _variables;
@@ -26,7 +26,7 @@ namespace UgsMacros.Macros.Mortise
 
         public string MatchString => $@"^through-mortise";
 
-        public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
             var bitWidth = _variables.BitWidth();
             if (bitWidth.HasValue)

@@ -8,31 +8,54 @@ using UgsMacros.Framework.Regex;
 
 namespace UgsMacros.Macros.Cutting
 {
-    [Macro("@-with-z")]
-    public class AtDecimalXYZ : IMacro
+    [Macro("@")]
+    public class AtDecimalXYZ : IHelpfulMacro
     {
-        private RegexDecimal _x;
-        private RegexDecimal _y;
-        private RegexDecimal _z;
+        private readonly IMacroVariableSet _variables;
 
-        public AtDecimalXYZ()
+        public AtDecimalXYZ(
+            IMacroVariableSet variables)
         {
-            _x = new RegexDecimal("x");
-            _y = new RegexDecimal("y");
-            _z = new RegexDecimal("z");
+            _variables = variables;
         }
 
-        public string MatchString => $"^@{_x.Expression},{_y.Expression},{_z.Expression}$";
+        public string MatchString => $@"^@(?<x>[0-9 &\-\./]+),(?<y>[0-9 \-\./]+)(,(?<z>[0-9 \-\./]+))*(?<bit>\s+\+bit)*$";
 
-        public bool Execute(ICommandSender restClient, Match match, Func<string, bool?> translator)
+        public string BuildGCode(Match match)
         {
-            var x = _x.GetMillimeters(match);
-            var y = _y.GetMillimeters(match);
-            var z = _z.GetMillimeters(match);
+            var nonZeroOffset = 0m;
+            if (!string.IsNullOrWhiteSpace(match.Groups["bit"].Value))
+            {
+                nonZeroOffset = _variables.GetBitWidth();
+            }
 
-            restClient.SendLabeledCommand("Cut", $"X{x} Y{y} Z{z}");
+            var x = match.GetMillimeters("x", nonZeroOffset).Value;
+            var y = match.GetMillimeters("y", nonZeroOffset).Value;
+            var z = match.GetMillimeters("z") ?? 0m;
+
+            return $"X{x} Y{y} Z{z}";
+        }
+
+        public bool Execute(ICommandSender commandSender, Match match)
+        {
+            var gcode = BuildGCode(match);
+
+            commandSender.SendLabeledCommand("Cut", gcode);
 
             return true;
+        }
+
+        public void Help(HelpSummaryType helpSummaryType)
+        {
+            Console.WriteLine("Moves the bit with line interpolation by a relative X & Y (with optional Z) at the standard feed rate");
+            if (helpSummaryType == HelpSummaryType.Detailed)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Examples:");
+                Console.WriteLine(" @2.5,0 - Moves the bit 2.5 inches in the postitive x.");
+                Console.WriteLine(" @2&1/2,0 - Moves the bit 2.5 inches in the postitive x.");
+                Console.WriteLine(" @0,0,-0.24 - Plunges down 1/4 inch.");
+            }
         }
     }
 }

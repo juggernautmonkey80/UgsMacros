@@ -26,7 +26,7 @@ namespace UgsMacros.Macros.Mortise
 
         public string MatchString => $@"^square-pocket\s+{_width.Expression}x{_height.Expression}\s+{_depth.Expression}";
 
-        public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
             var bitWidth = _variables.BitWidth();
             if (bitWidth.HasValue)

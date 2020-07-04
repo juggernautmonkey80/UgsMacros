@@ -20,7 +20,7 @@ namespace UgsMacros.Macros.Cutting
 
         public string MatchString => $@"^set-bit\s+{_width.Expression}$";
 
-        public bool Execute(ICommandSender commandSender, Match match, Func<string, bool?> translator)
+        public bool Execute(ICommandSender commandSender, Match match)
         {
             var width = _width.GetMillimeters(match);
             _variables.BitWidth(width);
